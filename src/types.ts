@@ -22,5 +22,4 @@ export interface IRoom {
   id: string
   roomName: string[]
   usersId: string[]
-  messages: IMessage[]
 }

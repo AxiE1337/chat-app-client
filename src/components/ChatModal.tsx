@@ -25,7 +25,6 @@ const ChatModal = ({ rooms }: IChatModal) => {
     if (!username || !userId) return
     const room: IRoom = {
       id: (Math.random() * 100).toString(),
-      messages: [],
       roomName: [data?.user.username as string, username],
       usersId: [data?.user.id as string, userId],
     }
