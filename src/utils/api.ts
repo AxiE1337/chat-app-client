@@ -50,3 +50,15 @@ export const logout = async () => {
   }
   return
 }
+
+export const searchUsers = async (username: string) => {
+  const res = await fetch(baseUrl + `/user/search?username=${username}`, {
+    credentials: 'include',
+  })
+  if (!res.ok) {
+    throw new Error('Something went wrong:(')
+  }
+  const data = await res.json()
+
+  return data
+}

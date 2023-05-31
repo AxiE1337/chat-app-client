@@ -1,6 +1,11 @@
 export interface IUser {
   user: { name: string; id: string; username: string }
 }
+export interface IUserSearch {
+  name: string
+  username: string
+  id: string
+}
 export interface ILogIn {
   token: string
 }

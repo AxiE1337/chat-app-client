@@ -3,6 +3,7 @@ import { logout, userAuth } from '../utils/api'
 import { useQuery } from 'react-query'
 import { socket } from '../utils/socket'
 import { IRoom } from '../types'
+import ChatModal from './ui/ChatModal'
 
 const SideBar = () => {
   const { data } = useQuery('auth', userAuth)
@@ -12,16 +13,6 @@ const SideBar = () => {
   const handleJoinRoom = (roomId: string) => {
     socket.emit('join_room', roomId)
     setSelectedId(roomId)
-  }
-
-  const handleCreateRoom = async () => {
-    const room: IRoom = {
-      id: (Math.random() * 100).toString(),
-      messages: [],
-      roomName: [data?.user.username as string, 'no name'],
-      usersId: [data?.user.id as string, '41qr512'],
-    }
-    socket.emit('create_room', { room: room, userId: data?.user.id })
   }
 
   const handleLogout = async () => {
@@ -58,7 +49,7 @@ const SideBar = () => {
           </button>
         </div>
       ))}
-      <button onClick={handleCreateRoom}>Start a chat</button>
+      <ChatModal />
       {data?.user.id && <button onClick={handleLogout}>log out</button>}
     </div>
   )
