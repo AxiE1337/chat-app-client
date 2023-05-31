@@ -3,16 +3,16 @@ import { logout, userAuth } from '../utils/api'
 import { useQuery } from 'react-query'
 import { socket } from '../utils/socket'
 import { IRoom } from '../types'
-import ChatModal from './ui/ChatModal'
+import ChatModal from './ChatModal'
 
 const SideBar = () => {
   const { data } = useQuery('auth', userAuth)
-  const [selectedId, setSelectedId] = useState<string>('')
+  const [selectedRoomId, setSelectedRoomId] = useState<string>('')
   const [rooms, setRooms] = useState<IRoom[]>([])
 
   const handleJoinRoom = (roomId: string) => {
     socket.emit('join_room', roomId)
-    setSelectedId(roomId)
+    setSelectedRoomId(roomId)
   }
 
   const handleLogout = async () => {
@@ -35,13 +35,13 @@ const SideBar = () => {
   }, [])
 
   return (
-    <div className='flex flex-col bg-slate-400 w-1/4 min-h-screen'>
+    <header className='flex flex-col bg-slate-400 w-1/4 min-h-screen'>
       <h1 className='text-center'>{data?.user.name}</h1>
       {rooms.map((room) => (
         <div
           key={room.id}
           className={`${
-            room.id === selectedId ? 'bg-green-600' : 'bg-green-400'
+            room.id === selectedRoomId ? 'bg-green-600' : 'bg-green-400'
           } p-10 mt-1`}
         >
           <button onClick={() => handleJoinRoom(room.id)}>
@@ -49,9 +49,9 @@ const SideBar = () => {
           </button>
         </div>
       ))}
-      <ChatModal />
+      <ChatModal rooms={rooms} />
       {data?.user.id && <button onClick={handleLogout}>log out</button>}
-    </div>
+    </header>
   )
 }
 
