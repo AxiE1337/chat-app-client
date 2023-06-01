@@ -1,22 +1,25 @@
 import { useEffect, useState, memo } from 'react'
 import { IMessage } from '../types'
 import { socket } from '../utils/socket'
-import { Button } from '@mui/material'
+import Message from './Message'
+import { Button, TextField } from '@mui/material'
 
 const Chat = ({ roomId, userId, username }: IChat) => {
   const [messages, setMessages] = useState<IMessage[]>([])
+  const [inputValue, setInputValue] = useState<string>('')
 
   const handleSendMessage = () => {
-    if (!userId || !roomId || !username) return
+    if (!userId || !roomId || !username || inputValue.length < 1) return
     const message: IMessage = {
       id: (Math.random() * 100).toString(),
       uid: userId,
       username: username,
       roomId: roomId,
-      message: 'Hello world!',
+      message: inputValue,
       iat: new Date(Date.now()),
     }
     socket.emit('send_message', message)
+    setInputValue('')
   }
 
   const handleDeleteMessage = (message: IMessage) => {
@@ -38,18 +41,33 @@ const Chat = ({ roomId, userId, username }: IChat) => {
   }, [roomId])
 
   return (
-    <div className='flex flex-col items-center justify-center'>
-      {messages.map((message) => (
-        <div key={message.id} className='flex flex-col bg-slate-300 p-5'>
-          <h1>{message.username + ' sent message'}</h1>
-          <h1>{message.message}</h1>
-          <p>{JSON.stringify(message.iat)}</p>
-          {message.uid === userId && (
-            <Button onClick={() => handleDeleteMessage(message)}>delete</Button>
-          )}
+    <div className='flex flex-col items-center justify-center w-3/5'>
+      <div className='flex flex-col flex-grow w-full bg-slate-300 shadow-xl rounded-lg overflow-hidden'>
+        <div className='flex flex-col flex-grow w-full h-[500px] p-4 overflow-auto'>
+          {messages.map((m) => (
+            <Message
+              message={m}
+              isAuthor={m.uid === userId}
+              handleDeleteMessage={handleDeleteMessage}
+              key={m.id}
+            />
+          ))}
         </div>
-      ))}
-      <button onClick={handleSendMessage}>send message</button>
+
+        <div className='flex items-end justify-center bg-gray-300 p-4'>
+          <TextField
+            className='w-full'
+            type='text'
+            variant='standard'
+            label='Type your message…'
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+          <Button variant='text' size='small' onClick={handleSendMessage}>
+            send
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

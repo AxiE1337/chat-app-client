@@ -43,7 +43,7 @@ const ChatModal = ({ rooms }: IChatModal) => {
   return (
     <div>
       <Button variant='contained' onClick={handleOpen}>
-        Start a chat
+        New chat
       </Button>
       <Modal
         open={open}
