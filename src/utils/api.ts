@@ -1,6 +1,6 @@
 import { ILogIn, IUser } from '../types'
 
-const baseUrl = import.meta.env.VITE_BASE_FETCH_URL
+const baseUrl = import.meta.env.VITE_BASE_FETCH_URL + '/api'
 
 export const userAuth = async (): Promise<IUser | undefined> => {
   try {
