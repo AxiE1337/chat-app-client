@@ -5,15 +5,22 @@ import { useNavigate } from 'react-router-dom'
 const Auth = () => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<string>('')
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (username.length < 2 || password.length < 2) return
-    const user = await signin({ username: username, password: password })
-    if (user?.token) {
-      navigate('/', { replace: true })
-      window.location.reload()
+    try {
+      if (username.length < 2 || password.length < 2) return
+      const user = await signin({ username: username, password: password })
+      if (user?.token) {
+        navigate('/', { replace: true })
+        window.location.reload()
+      }
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e.message)
+      }
     }
   }
 
@@ -44,6 +51,7 @@ const Auth = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        <h1>{error}</h1>
         <button className='btn w-full' type='submit'>
           Sign In
         </button>
