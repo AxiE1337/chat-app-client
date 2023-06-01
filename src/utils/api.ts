@@ -24,7 +24,7 @@ export const signin = async ({
   password: string
   username: string
 }): Promise<ILogIn | undefined> => {
-  const res = await fetch(import.meta.env.VITE_BASE_FETCH_URL + '/auth/login', {
+  const res = await fetch(baseUrl + '/auth/login', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
