@@ -1,16 +1,21 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { useNavigate } from 'react-router-dom'
 import { userAuth } from '../utils/api'
 import SideBar from '../components/SideBar'
 
 const Layout = () => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const { data, isLoading } = useQuery('auth', userAuth, {
     onSettled(data) {
       const isLoggedIn = !!data?.user.id
       if (!isLoggedIn) {
-        return navigate('/login', {
+        if (pathname === '/signup') {
+          return navigate('/signup', {
+            replace: true,
+          })
+        }
+        return navigate('/signin', {
           replace: true,
         })
       } else {
@@ -31,7 +36,7 @@ const Layout = () => {
 
   return (
     <main className='flex'>
-      {data?.user.id && <SideBar />}
+      {!!data?.user.id && <SideBar />}
       <Outlet />
     </main>
   )

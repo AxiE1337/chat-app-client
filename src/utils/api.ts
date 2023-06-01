@@ -6,6 +6,7 @@ export const userAuth = async (): Promise<IUser | undefined> => {
   try {
     const res = await fetch(baseUrl + '/user/get', {
       credentials: 'include',
+      cache: 'no-cache',
     })
     if (res.ok) {
       const data = await res.json()
@@ -16,7 +17,7 @@ export const userAuth = async (): Promise<IUser | undefined> => {
   }
 }
 
-export const logIn = async ({
+export const signin = async ({
   password,
   username,
 }: {
@@ -34,10 +35,41 @@ export const logIn = async ({
       password: password,
     }),
   })
+  if (!res.ok) {
+    throw new Error('Wrong password or username!')
+  }
   if (res.ok) {
     const data = await res.json()
     return data
   }
+}
+
+export const signup = async ({
+  password,
+  username,
+  name,
+}: {
+  password: string
+  username: string
+  name: string
+}) => {
+  const res = await fetch(baseUrl + '/auth/register', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      username: username,
+      password: password,
+      name: name,
+    }),
+  })
+  if (!res.ok) {
+    const { message } = await res.json()
+    throw new Error(message || 'Couldnt register you:(')
+  }
+  const data = await res.json()
+  return data
 }
 
 export const logout = async () => {

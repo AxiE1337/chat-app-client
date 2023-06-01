@@ -1,13 +1,15 @@
 import App from './pages/App'
-import Auth from './pages/Auth'
+import SingIn from './pages/SingIn'
 import Layout from './pages/Layout'
+import SignUp from './pages/SignUp'
 
 const routes = [
   {
     element: <Layout />,
     children: [
       { path: '/', element: <App /> },
-      { path: '/login', element: <Auth /> },
+      { path: '/signin', element: <SingIn /> },
+      { path: '/signup', element: <SignUp /> },
     ],
   },
 ]
