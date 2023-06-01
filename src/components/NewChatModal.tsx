@@ -1,13 +1,13 @@
 import { useState, memo, useMemo } from 'react'
-import { Button, Modal, TextField } from '@mui/material'
 import { IRoom, IUserSearch } from '../types'
 import { socket } from '../utils/socket'
 import { searchUsers, userAuth } from '../utils/api'
 import { useQuery } from 'react-query'
 import User from './User'
 import findUserIds from '../utils/findUserIds'
+import Modal from './ui/Modal'
 
-const ChatModal = ({ rooms }: IChatModal) => {
+const NewChatModal = ({ rooms }: IChatModal) => {
   const [open, setOpen] = useState<boolean>(false)
   const [users, setUsers] = useState<IUserSearch[]>([])
   const [inputValue, setInputValue] = useState<string>('')
@@ -42,34 +42,36 @@ const ChatModal = ({ rooms }: IChatModal) => {
 
   return (
     <div>
-      <Button variant='contained' onClick={handleOpen}>
+      <button className='btn' onClick={handleOpen}>
         New chat
-      </Button>
+      </button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <section className='absolute flex flex-col gap-5 top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 p-4 bg-slate-500 w-[400px]'>
-          <h2 className='text-center'>Find someone whom to message</h2>
+        <section className='absolute flex flex-col gap-5 top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 p-4 bg-gray-800 w-[400px] rounded'>
+          <h2 className='text-center text-white'>
+            Find someone whom to message
+          </h2>
           <form
             onSubmit={(e) => handleSearchUsers(e)}
             className='flex gap-5 items-center justify-center'
           >
-            <TextField
-              variant='standard'
+            <input
+              className='input input-bordered w-full max-w-xs'
               value={inputValue}
               placeholder='Search by usernames'
               onChange={(e) => setInputValue(e.target.value)}
             />
-            <Button
+            <button
+              className='btn btn-ghost text-white'
               disabled={inputValue.length < 2}
               type='submit'
-              variant='contained'
             >
               search
-            </Button>
+            </button>
           </form>
           {users.map((user, index) => (
             <User
@@ -87,7 +89,7 @@ const ChatModal = ({ rooms }: IChatModal) => {
   )
 }
 
-export default memo(ChatModal)
+export default memo(NewChatModal)
 
 interface IChatModal {
   rooms: IRoom[]

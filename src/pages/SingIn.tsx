@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { signin } from '../utils/api'
 import { useNavigate } from 'react-router-dom'
-import { Button, TextField } from '@mui/material'
 
 const Auth = () => {
   const [username, setUsername] = useState<string>('')
@@ -28,30 +27,30 @@ const Auth = () => {
       >
         <h2 className='text-2xl font-bold mb-4'>Sign in</h2>
         <div className='mb-4'>
-          <TextField
+          <input
+            className='input bg-gray-200'
             type='text'
-            variant='outlined'
-            label='Username'
+            placeholder='Username'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div className='mb-4'>
-          <TextField
+          <input
+            className='input bg-gray-200'
             type='password'
-            variant='outlined'
-            label='Password'
+            placeholder='Password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button type='submit' variant='outlined' className='w-full'>
+        <button className='btn w-full' type='submit'>
           Sign In
-        </Button>
+        </button>
       </form>
-      <Button variant='outlined' onClick={() => navigate('/signup')}>
+      <button className='btn' onClick={() => navigate('/signup')}>
         Sign up
-      </Button>
+      </button>
     </div>
   )
 }

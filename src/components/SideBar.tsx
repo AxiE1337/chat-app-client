@@ -3,7 +3,7 @@ import { logout, userAuth } from '../utils/api'
 import { useQuery } from 'react-query'
 import { socket } from '../utils/socket'
 import { IRoom } from '../types'
-import ChatModal from './ChatModal'
+import NewChatModal from './NewChatModal'
 
 const SideBar = () => {
   const { data } = useQuery('auth', userAuth)
@@ -35,22 +35,32 @@ const SideBar = () => {
   }, [])
 
   return (
-    <header className='flex flex-col bg-slate-400 w-1/4 min-h-screen'>
-      <h1 className='text-center'>{data?.user.name}</h1>
+    <header className='flex flex-col gap-4 items-center bg-gray-800 w-1/4 min-h-screen'>
+      <div className='flex w-full justify-between items-center p-4'>
+        <h1 className='text-center text-white'>{data?.user.name}</h1>
+        {data?.user.id && (
+          <button
+            className='btn btn-ghost btn-xs text-white'
+            onClick={handleLogout}
+          >
+            log out
+          </button>
+        )}
+      </div>
+      <NewChatModal rooms={rooms} />
       {rooms.map((room) => (
         <div
           key={room.id}
+          onClick={() => handleJoinRoom(room.id)}
           className={`${
-            room.id === selectedRoomId ? 'bg-green-600' : 'bg-green-400'
-          } p-10 mt-1`}
+            room.id === selectedRoomId ? 'bg-gray-500' : 'bg-gray-600'
+          } p-10 mt-1 rounded cursor-pointer`}
         >
-          <button onClick={() => handleJoinRoom(room.id)}>
-            {room.roomName}
-          </button>
+          <h2 className='text-white select-none'>
+            {room.roomName.filter((n) => n !== data?.user.username)}
+          </h2>
         </div>
       ))}
-      <ChatModal rooms={rooms} />
-      {data?.user.id && <button onClick={handleLogout}>log out</button>}
     </header>
   )
 }

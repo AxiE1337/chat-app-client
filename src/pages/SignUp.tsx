@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { signin, signup } from '../utils/api'
 import { useNavigate } from 'react-router-dom'
-import { Button, TextField } from '@mui/material'
 
 const SignUp = () => {
   const navigate = useNavigate()
@@ -32,39 +31,39 @@ const SignUp = () => {
       >
         <h2 className='text-2xl font-bold mb-4'>Sign Up</h2>
         <div className='mb-4'>
-          <TextField
+          <input
+            className='input bg-gray-200'
             type='text'
-            variant='outlined'
-            label='Name'
+            placeholder='Name'
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className='mb-4'>
-          <TextField
+          <input
+            className='input bg-gray-200'
             type='text'
-            variant='outlined'
-            label='Username'
+            placeholder='Username'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div className='mb-4'>
-          <TextField
+          <input
+            className='input bg-gray-200'
             type='password'
-            variant='outlined'
-            label='Password'
+            placeholder='Password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button type='submit' className='w-full'>
+        <button type='submit' className='btn w-full'>
           Sign Up
-        </Button>
+        </button>
       </form>
-      <Button variant='outlined' onClick={() => navigate('/signup')}>
+      <button className='btn' onClick={() => navigate('/signin')}>
         Sign in
-      </Button>
+      </button>
     </div>
   )
 }

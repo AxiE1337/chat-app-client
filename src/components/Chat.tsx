@@ -2,7 +2,6 @@ import { useEffect, useState, memo } from 'react'
 import { IMessage } from '../types'
 import { socket } from '../utils/socket'
 import Message from './Message'
-import { Button, TextField } from '@mui/material'
 
 const Chat = ({ roomId, userId, username }: IChat) => {
   const [messages, setMessages] = useState<IMessage[]>([])
@@ -54,18 +53,17 @@ const Chat = ({ roomId, userId, username }: IChat) => {
           ))}
         </div>
 
-        <div className='flex items-end justify-center bg-gray-300 p-4'>
-          <TextField
-            className='w-full'
+        <div className='flex items-end justify-center bg-gray-300 p-4 join'>
+          <input
+            className='input w-full max-w-xs join-item'
             type='text'
-            variant='standard'
-            label='Type your message…'
+            placeholder='Type your message…'
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <Button variant='text' size='small' onClick={handleSendMessage}>
+          <button className='btn join-item' onClick={handleSendMessage}>
             send
-          </Button>
+          </button>
         </div>
       </div>
     </div>
