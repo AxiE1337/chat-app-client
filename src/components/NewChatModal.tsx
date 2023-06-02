@@ -6,6 +6,7 @@ import { useQuery } from 'react-query'
 import User from './User'
 import findUserIds from '../utils/findUserIds'
 import Modal from './ui/Modal'
+import Button from './ui/Button'
 
 const NewChatModal = ({ rooms }: IChatModal) => {
   const [open, setOpen] = useState<boolean>(false)
@@ -42,9 +43,9 @@ const NewChatModal = ({ rooms }: IChatModal) => {
 
   return (
     <div>
-      <button className='btn' onClick={handleOpen}>
+      <Button onClick={handleOpen} className='mt-10'>
         New chat
-      </button>
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
