@@ -35,8 +35,8 @@ const SideBar = () => {
   }, [])
 
   return (
-    <header className='flex flex-col gap-4 items-center bg-gray-800 w-1/4 min-h-screen'>
-      <div className='flex w-full justify-between items-center p-4'>
+    <header className='flex flex-col gap-4 items-center bg-gray-800 w-[300px] md:w-[100px] min-h-screen'>
+      <div className='flex w-full justify-between items-center p-4 md:p-1 md:flex-col'>
         <h1 className='text-center text-white'>{data?.user.name}</h1>
         {data?.user.id && (
           <button
@@ -54,7 +54,7 @@ const SideBar = () => {
           onClick={() => handleJoinRoom(room.id)}
           className={`${
             room.id === selectedRoomId ? 'bg-gray-500' : 'bg-gray-600'
-          } p-10 mt-1 rounded cursor-pointer`}
+          } p-10 mt-1 md:p-5 rounded cursor-pointer`}
         >
           <h2 className='text-white select-none'>
             {room.roomName.filter((n) => n !== data?.user.username)}

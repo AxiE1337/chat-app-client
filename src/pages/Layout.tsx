@@ -28,9 +28,9 @@ const Layout = () => {
 
   if (isLoading) {
     return (
-      <h1 className='flex flex-col min-h-screen items-center justify-center'>
-        Loading...
-      </h1>
+      <div className='flex flex-col min-h-screen items-center justify-center'>
+        <span className='loading loading-ring loading-lg'></span>
+      </div>
     )
   }
 

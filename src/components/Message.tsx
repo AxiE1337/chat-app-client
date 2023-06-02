@@ -5,7 +5,9 @@ const Message = ({ message, handleDeleteMessage, isAuthor }: IMessageProps) => {
   return (
     <div className='flex mb-2 w-full bg-white rounded-sm relative'>
       <div className='rounded py-2 px-3 w-full'>
-        <p className='text-sm text-teal'>{message.username}</p>
+        <p className='text-sm text-teal'>
+          {isAuthor ? 'You' : message.username}
+        </p>
         <p className='mt-1 text-xl'>{message.message}</p>
         <p className='text-right text-xs text-grey-dark mt-1'>
           {message.iat.toString()}
@@ -13,7 +15,7 @@ const Message = ({ message, handleDeleteMessage, isAuthor }: IMessageProps) => {
       </div>
       {isAuthor && (
         <button
-          className='btn btn-ghost btn-sm absolute right-0 top-0'
+          className='btn btn-circle btn-ghost btn-sm absolute right-0 top-0'
           onClick={() => handleDeleteMessage(message)}
         >
           <svg
