@@ -8,7 +8,7 @@ const Message = ({ message, handleDeleteMessage, isAuthor }: IMessageProps) => {
         <p className='text-sm text-teal'>
           {isAuthor ? 'You' : message.username}
         </p>
-        <p className='mt-1 text-xl'>{message.message}</p>
+        <p className='mt-1 text-xl break-words'>{message.message}</p>
         <p className='text-right text-xs text-grey-dark mt-1'>
           {message.iat.toString()}
         </p>
