@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react'
+import { useEffect, useState, memo, FormEvent } from 'react'
 import { IMessage } from '../types'
 import { socket } from '../utils/socket'
 import Message from './Message'
@@ -7,7 +7,8 @@ const Chat = ({ roomId, userId, username }: IChat) => {
   const [messages, setMessages] = useState<IMessage[]>([])
   const [inputValue, setInputValue] = useState<string>('')
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     if (!userId || !roomId || !username || inputValue.length < 1) return
     const message: IMessage = {
       id: (Math.random() * 100).toString(),
@@ -40,8 +41,8 @@ const Chat = ({ roomId, userId, username }: IChat) => {
   }, [roomId])
 
   return (
-    <div className='flex flex-col items-center justify-center w-3/5 md:w-full h-screen'>
-      <div className='flex flex-col flex-grow w-full bg-gray-800 shadow-xl rounded-lg md:rounded-none overflow-hidden'>
+    <div className='flex flex-col items-center justify-center w-full md:w-full h-screen'>
+      <div className='flex flex-col flex-grow w-full bg-gray-800 shadow-xl md:rounded-none overflow-hidden'>
         <div className='flex flex-col flex-grow w-full h-[500px] p-4 overflow-auto'>
           {messages.map((m) => (
             <Message
@@ -52,7 +53,10 @@ const Chat = ({ roomId, userId, username }: IChat) => {
             />
           ))}
         </div>
-        <div className='flex items-end justify-center bg-gray-700 p-4 md:p-0 rounded join'>
+        <form
+          onSubmit={handleSendMessage}
+          className='flex items-end justify-center bg-gray-700 p-4 md:p-0 rounded join'
+        >
           <input
             className='input w-full max-w-xs join-item'
             type='text'
@@ -60,10 +64,10 @@ const Chat = ({ roomId, userId, username }: IChat) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <button className='btn join-item' onClick={handleSendMessage}>
+          <button type='submit' className='btn join-item'>
             send
           </button>
-        </div>
+        </form>
       </div>
     </div>
   )

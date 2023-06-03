@@ -52,13 +52,13 @@ const NewChatModal = ({ rooms }: IChatModal) => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <section className='absolute flex flex-col gap-5 top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 p-4 bg-gray-800 w-[400px] rounded'>
+        <section className='absolute flex flex-col gap-5 top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 p-4 bg-gray-800 w-4/5 rounded'>
           <h2 className='text-center text-white'>
             Find someone whom to message
           </h2>
           <form
             onSubmit={(e) => handleSearchUsers(e)}
-            className='flex gap-5 items-center justify-center'
+            className='flex md:flex-col gap-5 items-center justify-center'
           >
             <input
               className='input input-bordered w-full max-w-xs'

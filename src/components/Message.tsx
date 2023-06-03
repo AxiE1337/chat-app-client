@@ -3,7 +3,11 @@ import { IMessage } from '../types'
 
 const Message = ({ message, handleDeleteMessage, isAuthor }: IMessageProps) => {
   return (
-    <div className='flex mb-2 w-full bg-white rounded-sm relative'>
+    <div
+      className={`flex mb-2 w-2/4 bg-white rounded-sm relative ${
+        isAuthor ? 'ml-auto' : 'mr-auto'
+      }`}
+    >
       <div className='rounded py-2 px-3 w-full'>
         <p className='text-sm text-teal'>
           {isAuthor ? 'You' : message.username}

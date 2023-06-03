@@ -19,12 +19,16 @@ const App = () => {
 
   return (
     <main className='flex flex-col min-h-screen w-full items-center justify-center'>
-      {roomId && (
+      {roomId ? (
         <Chat
           roomId={roomId}
           userId={data?.user.id}
           username={data?.user.username}
         />
+      ) : (
+        <div className='flex flex-col h-screen items-center justify-center'>
+          <h1>No chats opened</h1>
+        </div>
       )}
     </main>
   )
