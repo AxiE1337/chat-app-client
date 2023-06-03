@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import { socket } from '../utils/socket'
 import { IRoom } from '../types'
 import NewChatModal from './NewChatModal'
+import MobileSideBar from './MobileSideBar'
 
 const SideBar = () => {
   const { data } = useQuery('auth', userAuth)
@@ -34,34 +35,62 @@ const SideBar = () => {
     }
   }, [])
 
-  return (
-    <header className='flex flex-col gap-4 items-center bg-gray-800 w-[300px] md:w-[100px] min-h-screen'>
-      <div className='flex w-full justify-between items-center p-4 md:p-1 md:flex-col'>
-        <h1 className='text-center text-white'>{data?.user.name}</h1>
-        {data?.user.id && (
-          <button
-            className='btn btn-ghost btn-xs text-white'
-            onClick={handleLogout}
+  const roomsContent = () => {
+    return (
+      <>
+        {rooms.map((room) => (
+          <div
+            key={room.id}
+            onClick={() => handleJoinRoom(room.id)}
+            className={`${
+              room.id === selectedRoomId ? 'bg-gray-500' : 'bg-gray-600'
+            } p-10 mt-1 md:p-5 rounded cursor-pointer`}
           >
-            log out
-          </button>
-        )}
-      </div>
-      <NewChatModal rooms={rooms} />
-      {rooms.map((room) => (
-        <div
-          key={room.id}
-          onClick={() => handleJoinRoom(room.id)}
-          className={`${
-            room.id === selectedRoomId ? 'bg-gray-500' : 'bg-gray-600'
-          } p-10 mt-1 md:p-5 rounded cursor-pointer`}
-        >
-          <h2 className='text-white select-none'>
-            {room.roomName.filter((n) => n !== data?.user.username)}
-          </h2>
+            <h2 className='text-white select-none'>
+              {room.roomName.filter((n) => n !== data?.user.username)}
+            </h2>
+          </div>
+        ))}
+      </>
+    )
+  }
+
+  return (
+    <>
+      <MobileSideBar>
+        <header className='flex flex-col gap-4 items-center bg-gray-800 min-w-[200px] min-h-screen'>
+          <div className='flex w-full justify-between items-center p-1 px-5'>
+            <h1 className='text-center text-white'>{data?.user.name}</h1>
+            {data?.user.id && (
+              <button
+                className='btn btn-ghost btn-xs text-white'
+                onClick={handleLogout}
+              >
+                log out
+              </button>
+            )}
+          </div>
+          <NewChatModal rooms={rooms} />
+          {roomsContent()}
+        </header>
+      </MobileSideBar>
+
+      <header className='flex flex-col gap-4 items-center bg-gray-800 w-[300px] md:w-[100px] min-h-screen md:hidden'>
+        <div className='flex w-full justify-between items-center p-4 md:p-1 md:flex-col'>
+          <h1 className='text-center text-white'>{data?.user.name}</h1>
+          {data?.user.id && (
+            <button
+              className='btn btn-ghost btn-xs text-white'
+              onClick={handleLogout}
+            >
+              log out
+            </button>
+          )}
         </div>
-      ))}
-    </header>
+        <NewChatModal rooms={rooms} />
+        {roomsContent()}
+      </header>
+    </>
   )
 }
 

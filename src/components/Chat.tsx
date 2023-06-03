@@ -40,7 +40,7 @@ const Chat = ({ roomId, userId, username }: IChat) => {
   }, [roomId])
 
   return (
-    <div className='flex flex-col items-center justify-center w-3/5 md:w-full'>
+    <div className='flex flex-col items-center justify-center w-3/5 md:w-full h-screen'>
       <div className='flex flex-col flex-grow w-full bg-gray-800 shadow-xl rounded-lg md:rounded-none overflow-hidden'>
         <div className='flex flex-col flex-grow w-full h-[500px] p-4 overflow-auto'>
           {messages.map((m) => (
@@ -52,7 +52,7 @@ const Chat = ({ roomId, userId, username }: IChat) => {
             />
           ))}
         </div>
-        <div className='flex items-end justify-center bg-gray-700 p-4 md:p-0 join'>
+        <div className='flex items-end justify-center bg-gray-700 p-4 md:p-0 rounded join'>
           <input
             className='input w-full max-w-xs join-item'
             type='text'
