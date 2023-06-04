@@ -8,3 +8,7 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+body {
+  line-height: 1.6;
+  font-family: 'Inter', sans-serif;
+}
