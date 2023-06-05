@@ -7,10 +7,13 @@ const SignUp = () => {
   const [name, setName] = useState<string>('')
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<string>('')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (name.length < 2 || password.length < 4 || username.length < 2) return
+    if (name.length < 2 || password.length < 4 || username.length < 2) {
+      return setError('fields shouldnt be empty!')
+    }
     try {
       await signup({ password, username, name })
       setName('')
@@ -19,7 +22,10 @@ const SignUp = () => {
       await signin({ password, username })
       navigate('/', { replace: true })
       window.location.reload()
-    } catch (e) {
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e.message)
+      }
       console.log(e)
     }
   }
@@ -60,6 +66,7 @@ const SignUp = () => {
         <button type='submit' className='btn w-full'>
           Sign Up
         </button>
+        <p className='p-1 mt-2 text-center'>{error}</p>
       </form>
       <button className='btn' onClick={() => navigate('/signin')}>
         Sign in
