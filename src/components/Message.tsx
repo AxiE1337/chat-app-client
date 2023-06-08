@@ -6,7 +6,7 @@ const Message = ({ message, handleDeleteMessage, isAuthor }: IMessageProps) => {
     <div
       className={`flex mb-2 w-2/4 bg-white rounded-sm relative ${
         isAuthor ? 'ml-auto' : 'mr-auto'
-      }`}
+      } slide-in-left`}
     >
       <div className='rounded py-2 px-3 w-full'>
         <p className='text-sm text-teal'>

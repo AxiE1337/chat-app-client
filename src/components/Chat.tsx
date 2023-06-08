@@ -1,4 +1,4 @@
-import { useEffect, useState, memo, FormEvent } from 'react'
+import { useEffect, useState, memo, FormEvent, useRef } from 'react'
 import { IMessage } from '../types'
 import { socket } from '../utils/socket'
 import Message from './Message'
@@ -6,6 +6,7 @@ import Message from './Message'
 const Chat = ({ roomId, userId, username }: IChat) => {
   const [messages, setMessages] = useState<IMessage[]>([])
   const [inputValue, setInputValue] = useState<string>('')
+  const ref = useRef<HTMLDivElement>(null)
 
   const handleSendMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -40,10 +41,19 @@ const Chat = ({ roomId, userId, username }: IChat) => {
     }
   }, [roomId])
 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollTop = ref.current.scrollHeight
+    }
+  }, [messages])
+
   return (
     <div className='flex flex-col items-center justify-center w-full md:w-full h-screen'>
       <div className='flex flex-col flex-grow w-full bg-gray-800 shadow-xl md:rounded-none overflow-hidden'>
-        <div className='flex flex-col flex-grow w-full h-[500px] p-4 overflow-auto'>
+        <div
+          className='flex flex-col flex-grow w-full h-[500px] p-4 overflow-auto scroll-auto'
+          ref={ref}
+        >
           {messages.map((m) => (
             <Message
               message={m}
